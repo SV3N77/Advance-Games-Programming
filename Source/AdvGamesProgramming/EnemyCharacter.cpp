@@ -52,6 +52,7 @@ void AEnemyCharacter::AgentEngage()
 	{
 		DirectionToTarget = DetectedActor->GetActorLocation() - this->GetActorLocation();
 		Fire(DirectionToTarget);
+		this->SetActorRelativeRotation(DirectionToTarget.Rotation(), true);
 	}
 }
 
