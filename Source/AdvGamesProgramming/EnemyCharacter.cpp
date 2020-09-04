@@ -43,7 +43,7 @@ void AEnemyCharacter::AgentEngage()
 {
 	if (Path.Num() == 0 && Manager != nullptr)
 	{
-		if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(100.0f))
+		if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(200.0f))
 		{
 			Path = Manager->GeneratePath(CurrentNode, Manager->FindNearestNode(DetectedActor->GetActorLocation()));
 		}
@@ -60,7 +60,7 @@ void AEnemyCharacter::AgentEvade()
 {
 	if (Path.Num() == 0 && Manager != nullptr)
 	{
-		if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(100.0f))
+		if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(200.0f))
 		{
 			Path = Manager->GeneratePath(CurrentNode, Manager->FindFurthestNode(DetectedActor->GetActorLocation()));
 		}
@@ -95,7 +95,7 @@ void AEnemyCharacter::MoveAlongPath()
 	if (Path.Num() > 0 && Manager != nullptr)
 	{
 		//UE_LOG(LogTemp, Display, TEXT("Current Node: %s"), *CurrentNode->GetName())
-		if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(100.0f))
+		if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(200.0f))
 		{
 			UE_LOG(LogTemp, Display, TEXT("At Node %s"), *CurrentNode->GetName())
 				CurrentNode = Path.Pop();
