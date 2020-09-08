@@ -5,6 +5,8 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/World.h"
+#include "UObject/ConstructorHelpers.h"
+
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -17,6 +19,9 @@ APlayerCharacter::APlayerCharacter()
 
 	LookSensitivity = 1.0f;
 	SprintMultiplier = 1.5f;
+	static ConstructorHelpers::FObjectFinder<USoundCue> SprintCue(TEXT("/Game/Assets/Audio/Whistle_Distract_Cue"));
+	SprintSoundCue = SprintCue.Object;
+	
 }
 
 // Called when the game starts or when spawned
@@ -24,6 +29,8 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	Camera = FindComponentByClass<UCameraComponent>();
+	
+	
 }
 
 // Called every frame
@@ -46,6 +53,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &APlayerCharacter::Jump);
 	PlayerInputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Pressed, this, &APlayerCharacter::SprintStart);
 	PlayerInputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Released, this, &APlayerCharacter::SprintEnd);
+	PlayerInputComponent->BindAction(TEXT("Distract"), EInputEvent::IE_Pressed, this, &APlayerCharacter::Distract);
 }
 
 void APlayerCharacter::MoveForward(float Value)
@@ -92,5 +100,12 @@ void APlayerCharacter::SprintStart()
 void APlayerCharacter::SprintEnd()
 {
 	GetCharacterMovement()->MaxWalkSpeed /= SprintMultiplier;
+	
+}
+
+void APlayerCharacter::Distract()
+{
+	UGameplayStatics::PlaySoundAtLocation(this, SprintSoundCue, this->GetActorLocation(), FRotator::ZeroRotator, 1, 1, 0, nullptr, nullptr, this);
+	UAISense_Hearing::ReportNoiseEvent(this, this->GetActorLocation(), 1, this, 0, TEXT("Noise"));
 }
 

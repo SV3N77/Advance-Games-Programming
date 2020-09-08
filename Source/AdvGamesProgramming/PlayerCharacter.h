@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Perception/AISense_Hearing.h"
+#include "Sound/SoundCue.h"
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
@@ -34,6 +37,7 @@ public:
 
 	void SprintStart();
 	void SprintEnd();
+	void Distract();
 
 private:
 	UPROPERTY(EditInstanceOnly)
@@ -41,6 +45,8 @@ private:
 
 	UPROPERTY(EditInstanceOnly)
 	float SprintMultiplier;
-
+	
+	USoundCue* SprintSoundCue;
+	
 	UCameraComponent* Camera;
 };
