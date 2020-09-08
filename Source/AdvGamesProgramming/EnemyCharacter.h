@@ -43,7 +43,8 @@ public:
 	UAIPerceptionComponent* PerceptionComponent;
 	FVector DirectionToTarget;
 	UHealthComponent* HealthComponent;
-	
+
+	FActorPerceptionInfo* PerceptionInfo;
 	UPROPERTY(VisibleAnywhere)
 	AActor* DetectedActor;
 	UPROPERTY(VisibleAnywhere)
@@ -55,7 +56,7 @@ public:
 	void AgentEngage();
 	void AgentEvade();
 	UFUNCTION()
-	void SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus);
+	void SensePlayer(const TArray<AActor*>& ActorSensed);
 	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

@@ -21,7 +21,7 @@ void AEnemyCharacter::BeginPlay()
 	Super::BeginPlay();
 	PerceptionComponent = FindComponentByClass<UAIPerceptionComponent>();
 	if (!PerceptionComponent) { UE_LOG(LogTemp, Error, TEXT("NO PERCEPTION COMPONENT FOUND")) }
-	PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyCharacter::SensePlayer);
+	PerceptionComponent->OnPerceptionUpdated.AddDynamic(this,  &AEnemyCharacter::SensePlayer);
 
 	HealthComponent = FindComponentByClass<UHealthComponent>();
 	
@@ -52,7 +52,6 @@ void AEnemyCharacter::AgentEngage()
 	{
 		DirectionToTarget = DetectedActor->GetActorLocation() - this->GetActorLocation();
 		Fire(DirectionToTarget);
-		this->SetActorRelativeRotation(DirectionToTarget.Rotation(), true);
 	}
 }
 
@@ -72,12 +71,18 @@ void AEnemyCharacter::AgentEvade()
 	}
 }
 
-void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
+void AEnemyCharacter::SensePlayer(const TArray<AActor*>& ActorSensed) 
 {
 	
-	if (Stimulus.WasSuccessfullySensed())
+	for (AActor* Actor : ActorSensed)
 	{
-		DetectedActor = ActorSensed;
+		//PerceptionInfo = PerceptionComponent->GetActorInfo(Actor&);
+		//PerceptionComponent->GetActorsPerception(Actor, PerceptionInfo);
+	}
+	/*
+	if ()
+	{
+		DetectedActor = Actor;
 		bCanSeeActor = true;
 		UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
 	}
@@ -85,8 +90,7 @@ void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 	{
 		bCanSeeActor = false;
 		UE_LOG(LogTemp, Warning, TEXT("Player Lost"))
-	}
-		
+	}*/
 }
 
 void AEnemyCharacter::MoveAlongPath()
