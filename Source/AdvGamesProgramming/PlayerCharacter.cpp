@@ -19,8 +19,8 @@ APlayerCharacter::APlayerCharacter()
 
 	LookSensitivity = 1.0f;
 	SprintMultiplier = 1.5f;
-	static ConstructorHelpers::FObjectFinder<USoundCue> SprintCue(TEXT("/Game/Assets/Audio/Whistle_Distract_Cue"));
-	SprintSoundCue = SprintCue.Object;
+	static ConstructorHelpers::FObjectFinder<USoundCue> DistractCue(TEXT("/Game/Assets/Audio/Whistle_Distract_Cue"));
+	DistractCue = DistractCue.Object;
 	
 }
 
@@ -105,7 +105,7 @@ void APlayerCharacter::SprintEnd()
 
 void APlayerCharacter::Distract()
 {
-	UGameplayStatics::PlaySoundAtLocation(this, SprintSoundCue, this->GetActorLocation(), FRotator::ZeroRotator, 1, 1, 0, nullptr, nullptr, this);
+	UGameplayStatics::PlaySoundAtLocation(this, DistractCue, this->GetActorLocation(), FRotator::ZeroRotator, 1, 1, 0, nullptr, nullptr, this);
 	UAISense_Hearing::ReportNoiseEvent(this, this->GetActorLocation(), 1, this, 0, TEXT("Noise"));
 }
 
