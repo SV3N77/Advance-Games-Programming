@@ -45,7 +45,8 @@ private:
 
 	UPROPERTY(EditInstanceOnly)
 	float SprintMultiplier;
-	
+
+	UPROPERTY(EditInstanceOnly)
 	USoundCue* DistractCue;
 	
 	UCameraComponent* Camera;

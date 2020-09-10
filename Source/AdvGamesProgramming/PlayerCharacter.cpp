@@ -19,8 +19,6 @@ APlayerCharacter::APlayerCharacter()
 
 	LookSensitivity = 1.0f;
 	SprintMultiplier = 1.5f;
-	static ConstructorHelpers::FObjectFinder<USoundCue> DistractCue(TEXT("/Game/Assets/Audio/Whistle_Distract_Cue"));
-	DistractCue = DistractCue.Object;
 	
 }
 
