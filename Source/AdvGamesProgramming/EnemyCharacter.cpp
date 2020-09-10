@@ -21,7 +21,7 @@ void AEnemyCharacter::BeginPlay()
 	Super::BeginPlay();
 	PerceptionComponent = FindComponentByClass<UAIPerceptionComponent>();
 	if (!PerceptionComponent) { UE_LOG(LogTemp, Error, TEXT("NO PERCEPTION COMPONENT FOUND")) }
-	PerceptionComponent->OnPerceptionUpdated.AddDynamic(this,  &AEnemyCharacter::SensePlayer);
+	PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this,  &AEnemyCharacter::SensePlayer);
 
 	HealthComponent = FindComponentByClass<UHealthComponent>();
 	
@@ -70,19 +70,11 @@ void AEnemyCharacter::AgentEvade()
 		Fire(DirectionToTarget);
 	}
 }
-
-void AEnemyCharacter::SensePlayer(const TArray<AActor*>& ActorSensed) 
+void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 {
-	
-	for (AActor* Actor : ActorSensed)
+	if (Stimulus.WasSuccessfullySensed())
 	{
-		//PerceptionInfo = PerceptionComponent->GetActorInfo(Actor&);
-		//PerceptionComponent->GetActorsPerception(Actor, PerceptionInfo);
-	}
-	/*
-	if ()
-	{
-		DetectedActor = Actor;
+		DetectedActor = ActorSensed;
 		bCanSeeActor = true;
 		UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
 	}
@@ -90,8 +82,22 @@ void AEnemyCharacter::SensePlayer(const TArray<AActor*>& ActorSensed)
 	{
 		bCanSeeActor = false;
 		UE_LOG(LogTemp, Warning, TEXT("Player Lost"))
-	}*/
+	}
+
+
 }
+/*
+void AEnemyCharacter::SensePlayer(TArray<AActor*>& ActorSensed ) 
+{
+	
+	for (AActor* Actor : ActorSensed)
+	{
+		//PerceptionInfo = PerceptionComponent->GetActorInfo(Actor&);
+		//PerceptionComponent->GetActorsPerception(Actor, PerceptionInfo);
+	}
+	
+	
+}*/
 
 void AEnemyCharacter::MoveAlongPath()
 {

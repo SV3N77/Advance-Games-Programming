@@ -56,8 +56,10 @@ public:
 	void AgentEngage();
 	void AgentEvade();
 	UFUNCTION()
-	void SensePlayer(const TArray<AActor*>& ActorSensed);
-	
+	void SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus);
+	//UFUNCTION()
+	//void SensePlayer(TArray<AActor*> ActorSensed);
+	//
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
