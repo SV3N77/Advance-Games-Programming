@@ -105,7 +105,7 @@ void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 			//Supposed to run when there is an active stimulus of heardperceptioninfo towards the target stimulus
 			if (HeardPerceptionInfo != nullptr && PerceptionComponent->HasActiveStimulus(*HeardPerceptionInfo->Target, HearingSenseID))
 			{
-				//supoposed to get the location of stimulus
+				//Supposed to get the location of stimulus
 				StimulusLocation = HeardPerceptionInfo->GetStimulusLocation(HearingSenseID);
 				bHeardActor = true;
 				UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
