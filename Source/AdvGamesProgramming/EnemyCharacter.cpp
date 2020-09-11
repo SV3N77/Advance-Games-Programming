@@ -72,9 +72,9 @@ void AEnemyCharacter::AgentEvade()
 	}
 }
 
-void AEnemyCharacter::Invesitgate()
+void AEnemyCharacter::AgentInvestigate()
 {
-	if(bHeardActor == true)
+	if (bHeardActor == true)
 	{
 		if (Path.Num() == 0 && Manager != nullptr)
 		{
@@ -84,15 +84,12 @@ void AEnemyCharacter::Invesitgate()
 			}
 		}
 	}
-
 }
-
 
 void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 {
 	HearingSenseID = UAISense::GetSenseID<UAISense_Hearing>();
 	SightSenseID = UAISense::GetSenseID<UAISense_Sight>();
-	
 	if (PerceptionComponent->GetSenseConfig(HearingSenseID) != nullptr)
 	{
 		const FActorPerceptionInfo* HeardPerceptionInfo = PerceptionComponent->GetFreshestTrace(HearingSenseID);
@@ -130,8 +127,21 @@ void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 		
 	}*/
 
-
+	/*{
+		if (Stimulus.WasSuccessfullySensed())
+		{
+			DetectedActor = ActorSensed;
+			bCanSeeActor = true;
+			UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
+		}
+		else
+		{
+			bCanSeeActor = false;
+			UE_LOG(LogTemp, Warning, TEXT("Player Lost"))
+		}
+	}*/
 }
+
 /*
 void AEnemyCharacter::SensePlayer(TArray<AActor*>& ActorSensed ) 
 {
@@ -191,6 +201,11 @@ void AEnemyCharacter::Tick(float DeltaTime)
 			Path.Empty();
 			CurrentAgentState = AgentState::EVADE;
 		}
+		else if (bHeardActor == true)
+		{
+			Path.Empty();
+			CurrentAgentState = AgentState::INVESTIGATE;
+		}
 		AgentPatrol();
 	}
 	else if (CurrentAgentState == AgentState::ENGAGE)
@@ -220,7 +235,21 @@ void AEnemyCharacter::Tick(float DeltaTime)
 		AgentEvade();
 
 	}
-	
+	else if (CurrentAgentState == AgentState::INVESTIGATE)
+	{
+		if (bCanSeeActor == true && HealthComponent->HealthPercentageRemaining() >= 0.4f)
+		{
+			CurrentAgentState = AgentState::ENGAGE;
+			Path.Empty();
+		}
+		else if (bCanSeeActor == true && HealthComponent->HealthPercentageRemaining() < 0.4f)
+		{
+			Path.Empty();
+			CurrentAgentState = AgentState::EVADE;
+		}
+		AgentInvestigate();
+
+	}
 	MoveAlongPath();
 	
 	

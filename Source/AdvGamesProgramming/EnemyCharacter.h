@@ -55,13 +55,19 @@ public:
 	FAISenseID HearingSenseID;
 	FAISenseID SightSenseID;
 	FVector StimulusLocation;
+
+	FActorPerceptionInfo* PerceptionInfo;
+
+	FAISenseID HearingSenseID;
+	FAISenseID SightSenseID;
+	FVector StimulusLocation;
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void Fire(FVector FireDirection);
 	void AgentPatrol();
 	void AgentEngage();
 	void AgentEvade();
-	void Invesitgate();
+	void AgentInvestigate();
 	UFUNCTION()
 	void SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus);
 	//UFUNCTION()
