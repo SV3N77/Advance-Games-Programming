@@ -3,8 +3,7 @@
 
 #include "EnemyCharacter.h"
 #include "EngineUtils.h"
-#include "Perception/AISense_Hearing.h"
-#include "Perception/AISense_Sight.h"
+
 
 
 // Sets default values
@@ -82,6 +81,7 @@ void AEnemyCharacter::AgentInvestigate()
 			{
 				Path = Manager->GeneratePath(CurrentNode, Manager->FindNearestNode(StimulusLocation));
 			}
+			
 		}
 	}
 }
@@ -90,31 +90,33 @@ void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 {
 	HearingSenseID = UAISense::GetSenseID<UAISense_Hearing>();
 	SightSenseID = UAISense::GetSenseID<UAISense_Sight>();
-	if (PerceptionComponent->GetSenseConfig(HearingSenseID) != nullptr)
-	{
-		const FActorPerceptionInfo* HeardPerceptionInfo = PerceptionComponent->GetFreshestTrace(HearingSenseID);
-		if (HeardPerceptionInfo != nullptr && PerceptionComponent->HasActiveStimulus(*HeardPerceptionInfo->Target, HearingSenseID))
+	
+		if (PerceptionComponent->GetSenseConfig(HearingSenseID) != nullptr)
 		{
-			StimulusLocation = HeardPerceptionInfo->GetStimulusLocation(HearingSenseID);
-			bHeardActor = true;
-			UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
+			const FActorPerceptionInfo* HeardPerceptionInfo = PerceptionComponent->GetFreshestTrace(HearingSenseID);
+			if (HeardPerceptionInfo != nullptr && PerceptionComponent->HasActiveStimulus(*HeardPerceptionInfo->Target, HearingSenseID))
+			{
+				StimulusLocation = HeardPerceptionInfo->GetStimulusLocation(HearingSenseID);
+				bHeardActor = true;
+				UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
+			}
 		}
-	}
-	else if (PerceptionComponent->GetSenseConfig(SightSenseID) != nullptr)
-	{
-		const FActorPerceptionInfo* SightPerceptionInfo = PerceptionComponent->GetFreshestTrace(SightSenseID);
-		if (SightPerceptionInfo != nullptr && PerceptionComponent->HasActiveStimulus(*SightPerceptionInfo->Target, SightSenseID))
+		else if (PerceptionComponent->GetSenseConfig(SightSenseID) != nullptr)
 		{
-			bCanSeeActor = true;
-			UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
+			const FActorPerceptionInfo* SightPerceptionInfo = PerceptionComponent->GetFreshestTrace(SightSenseID);
+			if (SightPerceptionInfo != nullptr && PerceptionComponent->HasActiveStimulus(*SightPerceptionInfo->Target, SightSenseID))
+			{
+				bCanSeeActor = true;
+				UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
+			}
 		}
-	}
-	else
-	{
+		else
+		{
 		bHeardActor = false;
 		bCanSeeActor = false;
 		UE_LOG(LogTemp, Warning, TEXT("Player Lost"))
-	}
+		}
+	
 	/*{
 		
 		DetectedActor = ActorSensed;

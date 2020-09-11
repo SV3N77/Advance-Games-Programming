@@ -7,6 +7,8 @@
 #include "GameFramework/Character.h"
 #include "AIManager.h"
 #include "HealthComponent.h"
+#include "Perception/AISense_Hearing.h"
+#include "Perception/AISense_Sight.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "EnemyCharacter.generated.h"
 
@@ -56,12 +58,6 @@ public:
 	FAISenseID SightSenseID;
 	FVector StimulusLocation;
 
-	FActorPerceptionInfo* PerceptionInfo;
-
-	FAISenseID HearingSenseID;
-	FAISenseID SightSenseID;
-	FVector StimulusLocation;
-	
 	UFUNCTION(BlueprintImplementableEvent)
 	void Fire(FVector FireDirection);
 	void AgentPatrol();
