@@ -88,14 +88,18 @@ void AEnemyCharacter::AgentInvestigate()
 
 void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 {
+	//Getting the Senses ID from enemy character
 	HearingSenseID = UAISense::GetSenseID<UAISense_Hearing>();
 	SightSenseID = UAISense::GetSenseID<UAISense_Sight>();
-	
+	//Runs if the perception component of the hearing sense ID is not pointing to null
 		if (PerceptionComponent->GetSenseConfig(HearingSenseID) != nullptr)
 		{
+			//Supposed to get the perception info of the freshest trace of hearing sense ID 
 			const FActorPerceptionInfo* HeardPerceptionInfo = PerceptionComponent->GetFreshestTrace(HearingSenseID);
+			//Supposed to run when there is a active stimulus of heardperceptioninfo towards the target stimulus
 			if (HeardPerceptionInfo != nullptr && PerceptionComponent->HasActiveStimulus(*HeardPerceptionInfo->Target, HearingSenseID))
 			{
+				//supoposed to get the location of stimulus
 				StimulusLocation = HeardPerceptionInfo->GetStimulusLocation(HearingSenseID);
 				bHeardActor = true;
 				UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
@@ -103,6 +107,7 @@ void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 		}
 		else if (PerceptionComponent->GetSenseConfig(SightSenseID) != nullptr)
 		{
+			//supposed 
 			const FActorPerceptionInfo* SightPerceptionInfo = PerceptionComponent->GetFreshestTrace(SightSenseID);
 			if (SightPerceptionInfo != nullptr && PerceptionComponent->HasActiveStimulus(*SightPerceptionInfo->Target, SightSenseID))
 			{
