@@ -3,6 +3,8 @@
 
 #include "EnemyCharacter.h"
 #include "EngineUtils.h"
+#include "Perception/AISense_Hearing.h"
+#include "Perception/AISense_Sight.h"
 
 
 
@@ -27,6 +29,7 @@ void AEnemyCharacter::BeginPlay()
 	
 	DetectedActor = nullptr;
 	bCanSeeActor = false;
+	bHeardActor = false;
 	
 }
 
@@ -70,22 +73,67 @@ void AEnemyCharacter::AgentEvade()
 		Fire(DirectionToTarget);
 	}
 }
+
+void AEnemyCharacter::AgentInvestigate()
+{
+	if (bHeardActor == true)
+	{
+		if (Path.Num() == 0 && Manager != nullptr)
+		{
+			if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(200.0f))
+			{
+				Path = Manager->GeneratePath(CurrentNode, Manager->FindNearestNode(StimulusLocation));
+			}
+		}
+	}
+}
+
 void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 {
-	if (Stimulus.WasSuccessfullySensed())
+	HearingSenseID = UAISense::GetSenseID<UAISense_Hearing>();
+	SightSenseID = UAISense::GetSenseID<UAISense_Sight>();
+
+	if (PerceptionComponent->GetSenseConfig(HearingSenseID) != nullptr)
 	{
-		DetectedActor = ActorSensed;
-		bCanSeeActor = true;
-		UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
+		const FActorPerceptionInfo* HeardPerceptionInfo = PerceptionComponent->GetFreshestTrace(HearingSenseID);
+		if (HeardPerceptionInfo != nullptr && PerceptionComponent->HasActiveStimulus(*HeardPerceptionInfo->Target, HearingSenseID))
+		{
+			StimulusLocation = HeardPerceptionInfo->GetStimulusLocation(HearingSenseID);
+			bHeardActor = true;
+			UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
+		}
+	}
+	else if (PerceptionComponent->GetSenseConfig(SightSenseID) != nullptr)
+	{
+		const FActorPerceptionInfo* SightPerceptionInfo = PerceptionComponent->GetFreshestTrace(SightSenseID);
+		if (SightPerceptionInfo != nullptr && PerceptionComponent->HasActiveStimulus(*SightPerceptionInfo->Target, SightSenseID))
+		{
+			bCanSeeActor = true;
+			UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
+		}
 	}
 	else
 	{
+		bHeardActor = false;
 		bCanSeeActor = false;
 		UE_LOG(LogTemp, Warning, TEXT("Player Lost"))
 	}
 
-
+	/*{
+		if (Stimulus.WasSuccessfullySensed())
+		{
+			DetectedActor = ActorSensed;
+			bCanSeeActor = true;
+			UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
+		}
+		else
+		{
+			bCanSeeActor = false;
+			UE_LOG(LogTemp, Warning, TEXT("Player Lost"))
+		}
+	}*/
 }
+
 /*
 void AEnemyCharacter::SensePlayer(TArray<AActor*>& ActorSensed ) 
 {
@@ -145,6 +193,11 @@ void AEnemyCharacter::Tick(float DeltaTime)
 			Path.Empty();
 			CurrentAgentState = AgentState::EVADE;
 		}
+		else if (bHeardActor == true)
+		{
+			Path.Empty();
+			CurrentAgentState = AgentState::INVESTIGATE;
+		}
 		AgentPatrol();
 	}
 	else if (CurrentAgentState == AgentState::ENGAGE)
@@ -172,6 +225,21 @@ void AEnemyCharacter::Tick(float DeltaTime)
 			Path.Empty();
 		}
 		AgentEvade();
+
+	}
+	else if (CurrentAgentState == AgentState::INVESTIGATE)
+	{
+		if (bCanSeeActor == true && HealthComponent->HealthPercentageRemaining() >= 0.4f)
+		{
+			CurrentAgentState = AgentState::ENGAGE;
+			Path.Empty();
+		}
+		else if (bCanSeeActor == true && HealthComponent->HealthPercentageRemaining() < 0.4f)
+		{
+			Path.Empty();
+			CurrentAgentState = AgentState::EVADE;
+		}
+		AgentInvestigate();
 
 	}
 	MoveAlongPath();

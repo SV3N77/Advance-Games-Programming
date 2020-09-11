@@ -15,7 +15,8 @@ enum class AgentState : uint8
 {
 	PATROL,
 	ENGAGE,
-	EVADE
+	EVADE,
+	INVESTIGATE
 };
 
 UCLASS()
@@ -44,17 +45,25 @@ public:
 	FVector DirectionToTarget;
 	UHealthComponent* HealthComponent;
 
-	FActorPerceptionInfo* PerceptionInfo;
 	UPROPERTY(VisibleAnywhere)
 	AActor* DetectedActor;
 	UPROPERTY(VisibleAnywhere)
 	bool bCanSeeActor;
+	UPROPERTY(VisibleAnywhere)
+	bool bHeardActor;
+
+	FAISenseID HearingSenseID;
+	FAISenseID SightSenseID;
+	FVector StimulusLocation;
+
+	FActorPerceptionInfo* PerceptionInfo;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void Fire(FVector FireDirection);
 	void AgentPatrol();
 	void AgentEngage();
 	void AgentEvade();
+	void AgentInvestigate();
 	UFUNCTION()
 	void SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus);
 	//UFUNCTION()
