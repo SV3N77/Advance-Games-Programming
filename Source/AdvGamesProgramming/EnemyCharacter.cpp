@@ -102,7 +102,7 @@ void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 		{
 			//Supposed to get the perception info of the freshest trace of hearing sense ID 
 			const FActorPerceptionInfo* HeardPerceptionInfo = PerceptionComponent->GetFreshestTrace(HearingSenseID);
-			//Supposed to run when there is a active stimulus of heardperceptioninfo towards the target stimulus
+			//Supposed to run when there is an active stimulus of heardperceptioninfo towards the target stimulus
 			if (HeardPerceptionInfo != nullptr && PerceptionComponent->HasActiveStimulus(*HeardPerceptionInfo->Target, HearingSenseID))
 			{
 				//supoposed to get the location of stimulus
@@ -113,10 +113,12 @@ void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 		}
 		else if (PerceptionComponent->GetSenseConfig(SightSenseID) != nullptr)
 		{
-			//supposed 
+			//supposed to get the perception info for sight
 			const FActorPerceptionInfo* SightPerceptionInfo = PerceptionComponent->GetFreshestTrace(SightSenseID);
+			//when there is an active stimulus of SightPerceptionInfo towards the target stimulus
 			if (SightPerceptionInfo != nullptr && PerceptionComponent->HasActiveStimulus(*SightPerceptionInfo->Target, SightSenseID))
 			{
+				
 				bCanSeeActor = true;
 				UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
 			}
@@ -127,19 +129,6 @@ void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 		bCanSeeActor = false;
 		UE_LOG(LogTemp, Warning, TEXT("Player Lost"))
 		}
-	
-	/*{
-		
-		DetectedActor = ActorSensed;
-		bCanSeeActor = true;
-		
-	}
-	else
-	{
-		bCanSeeActor = false;
-		
-	}*/
-
 	/*{
 		if (Stimulus.WasSuccessfullySensed())
 		{
@@ -154,7 +143,7 @@ void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 		}
 	}*/
 }
-
+//I tried to do this with the onperceptionupdated function but wasn't able to covert it from blueprints to c++
 /*
 void AEnemyCharacter::SensePlayer(TArray<AActor*>& ActorSensed ) 
 {

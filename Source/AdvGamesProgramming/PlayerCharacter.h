@@ -46,6 +46,7 @@ private:
 	UPROPERTY(EditInstanceOnly)
 	float SprintMultiplier;
 
+	//Sound cue able to be made through adding it in details section
 	UPROPERTY(EditInstanceOnly)
 	USoundCue* DistractCue;
 	
