@@ -50,11 +50,11 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	bool bCanSeeActor;
 	UPROPERTY(VisibleAnywhere)
-	bool bHeardActor;
+	bool bHeardActor; // boolean that checks whether the AI has heard the player
 
 	FAISenseID HearingSenseID;
 	FAISenseID SightSenseID;
-	FVector StimulusLocation;
+	FVector StimulusLocation; // the location of where the AI heard the player
 
 	FActorPerceptionInfo* PerceptionInfo;
 
