@@ -3,6 +3,8 @@
 
 #include "EnemyCharacter.h"
 #include "EngineUtils.h"
+#include "Engine/World.h"
+
 
 
 
@@ -27,7 +29,8 @@ void AEnemyCharacter::BeginPlay()
 	
 	DetectedActor = nullptr;
 	bCanSeeActor = false;
-	bHeardActor = false;
+	bHeardActor = false; // initialise the variable to false
+	
 }
 
 void AEnemyCharacter::AgentPatrol()
@@ -73,13 +76,16 @@ void AEnemyCharacter::AgentEvade()
 
 void AEnemyCharacter::AgentInvestigate()
 {
-	if (bHeardActor == true)
+	FTimerHandle DelayHandle;
+
+	if (bHeardActor == true) // if the AI hears the player's whistle
 	{
 		if (Path.Num() == 0 && Manager != nullptr)
 		{
 			if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(200.0f))
 			{
-				Path = Manager->GeneratePath(CurrentNode, Manager->FindNearestNode(StimulusLocation));
+				Path = Manager->GeneratePath(CurrentNode, Manager->FindNearestNode(StimulusLocation)); // generate a path to the location of the sound
+				//GetWorldTimerManager().SetTimer(DelayHandle, this, &AEnemyCharacter::AgentPatrol, 5.0f, false); // add a delay when the AI investigates the location of the sound, before returning to PATROL (not working)
 			}
 			
 		}
@@ -255,7 +261,6 @@ void AEnemyCharacter::Tick(float DeltaTime)
 			CurrentAgentState = AgentState::EVADE;
 		}
 		AgentInvestigate();
-
 	}
 	MoveAlongPath();
 	
