@@ -84,7 +84,7 @@ void AEnemyCharacter::AgentInvestigate()
 		{
 			if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(200.0f))
 			{
-				Path = Manager->GeneratePath(CurrentNode, Manager->FindNearestNode(StimulusLocation)); // generate a path to the location of the sound
+				Path = Manager->GeneratePath(CurrentNode, Manager->FindNearestNode(DetectedActor->GetActorLocation())); // generate a path to the location of the sound
 				//GetWorldTimerManager().SetTimer(DelayHandle, this, &AEnemyCharacter::AgentPatrol, 5.0f, false); // add a delay when the AI investigates the location of the sound, before returning to PATROL (not working)
 			}
 			
@@ -94,6 +94,29 @@ void AEnemyCharacter::AgentInvestigate()
 
 void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 {
+
+	if(Stimulus.WasSuccessfullySensed())
+	{
+		if(Stimulus.Tag.IsEqual("Noise"))
+		{
+			DetectedActor = ActorSensed;
+			bHeardActor = true;
+			UE_LOG(LogTemp, Warning, TEXT("Player Heard"))
+		}
+		else
+		{
+			DetectedActor = ActorSensed;
+			bCanSeeActor = true;
+			UE_LOG(LogTemp, Warning, TEXT("Player Detected"))
+		}
+
+	}
+	else
+	{
+		bHeardActor = false;
+		bCanSeeActor = false;
+	}
+	/*
 	//Getting the Senses ID from enemy character
 	HearingSenseID = UAISense::GetSenseID<UAISense_Hearing>();
 	SightSenseID = UAISense::GetSenseID<UAISense_Sight>();
@@ -128,7 +151,7 @@ void AEnemyCharacter::SensePlayer(AActor* ActorSensed, FAIStimulus Stimulus)
 		bHeardActor = false;
 		bCanSeeActor = false;
 		UE_LOG(LogTemp, Warning, TEXT("Player Lost"))
-		}
+		}*/
 	/*{
 		if (Stimulus.WasSuccessfullySensed())
 		{
