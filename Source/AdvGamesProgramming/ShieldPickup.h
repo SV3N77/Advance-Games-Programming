@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "ProcedurallyGeneratedMap.generated.h"
+#include "ShieldPickup.generated.h"
 
 UCLASS()
-class ADVGAMESPROGRAMMING_API AProcedurallyGeneratedMap : public AActor
+class ADVGAMESPROGRAMMING_API AShieldPickup : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AProcedurallyGeneratedMap();
+	AShieldPickup();
 
 protected:
 	// Called when the game starts or when spawned
@@ -23,5 +23,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	
 };
