@@ -3,25 +3,27 @@
 
 #include "ShieldPickup.h"
 
-// Sets default values
-AShieldPickup::AShieldPickup()
+void AShieldPickup::OnGenerate()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
-}
-
-// Called when the game starts or when spawned
-void AShieldPickup::BeginPlay()
-{
-	Super::BeginPlay();
+	APickup::OnGenerate();
 	
-}
+	int32 RandValue = FMath::RandRange(1, 100);
+	//Small shields more common so 60% chance
+	//Medium shields has 30% chance
+	//Large shields have 10% chance
+	if (RandValue <= 60)
+	{
+		ShieldType = ShieldType::SMALL;
 
-// Called every frame
-void AShieldPickup::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
+	}
+	else if (RandValue > 60 && RandValue <= 90)
+	{
+		ShieldType = ShieldType::MEDIUM;
+	}
+	else if (RandValue > 90 && RandValue <= 100)
+	{
+		ShieldType = ShieldType::LARGE;
+	}
+	
 }
 

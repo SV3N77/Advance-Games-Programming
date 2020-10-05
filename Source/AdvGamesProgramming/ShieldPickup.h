@@ -3,24 +3,29 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "Pickup.h"
 #include "ShieldPickup.generated.h"
 
+UENUM(BlueprintType)
+enum class ShieldType
+{
+	SMALL,
+	MEDIUM,
+	LARGE
+};
+
 UCLASS()
-class ADVGAMESPROGRAMMING_API AShieldPickup : public AActor
+class ADVGAMESPROGRAMMING_API AShieldPickup : public APickup
 {
 	GENERATED_BODY()
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+		void OnPickup(AActor* ActorThatPickedUp) override;
+	UFUNCTION(BlueprintCallable)
+		void OnGenerate() override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		ShieldType ShieldType;
 	
-public:	
-	// Sets default values for this actor's properties
-	AShieldPickup();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 };
