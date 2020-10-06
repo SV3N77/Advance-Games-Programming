@@ -46,5 +46,5 @@ void APickup::OnEnterPickup(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 	//UE_LOG(LogTemp, Warning, TEXT("Overlapped Component: %s \nOther Actor: %s\nOtherComponent: %s\n"), *OverlappedComponent->GetOwner()->GetName(), *OtherActor->GetName(), *OtherComponent->GetOwner()->GetName());
 	UE_LOG(LogTemp, Warning, TEXT("Overlap Event"))
 		OnPickup(OtherActor);
-	//Destroy();
+	Destroy();
 }
