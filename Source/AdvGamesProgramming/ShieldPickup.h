@@ -21,11 +21,14 @@ class ADVGAMESPROGRAMMING_API AShieldPickup : public APickup
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)
-		void OnPickup(AActor* ActorThatPickedUp) override;
+	void OnPickup(AActor* ActorThatPickedUp) override;
 	UFUNCTION(BlueprintCallable)
-		void OnGenerate() override;
+	void OnGenerate() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		ShieldType ShieldType;
+	ShieldType ShieldType;
+	
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	int32 CurrentShield;
 	
 };
