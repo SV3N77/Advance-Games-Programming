@@ -27,6 +27,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float MaxHealth;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shield")
+	float CurrentShield;
+
 	UPROPERTY(BlueprintReadOnly)
 	float CurrentHealth;
 

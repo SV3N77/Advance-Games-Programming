@@ -7,7 +7,7 @@
 #include "ShieldPickup.generated.h"
 
 UENUM(BlueprintType)
-enum class ShieldType
+enum class ShieldType : uint8
 {
 	SMALL,
 	MEDIUM,
