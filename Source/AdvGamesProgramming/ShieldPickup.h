@@ -30,5 +30,5 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	int32 CurrentShield;
-	
+
 };

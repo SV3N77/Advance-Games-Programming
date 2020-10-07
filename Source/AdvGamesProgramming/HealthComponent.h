@@ -28,7 +28,10 @@ public:
 	float MaxHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shield")
-	float CurrentShield;
+	int32 CurrentShield;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shield")
+	int32 MaxShield;
 
 	UPROPERTY(BlueprintReadOnly)
 	float CurrentHealth;
