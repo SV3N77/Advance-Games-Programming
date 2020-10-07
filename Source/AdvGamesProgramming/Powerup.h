@@ -28,6 +28,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnGenerate() override;
 
-	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly)*/
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	PowerupType Powerup;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float JumpBoostHeight;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float SpeedBoostWalkSpeed;
 };
