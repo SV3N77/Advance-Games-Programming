@@ -8,9 +8,9 @@ void AShieldPickup::OnGenerate()
 	APickup::OnGenerate();
 	UE_LOG(LogTemp, Warning, TEXT("GENERATING Shield PICKUP"))
 	int32 RandValue = FMath::RandRange(1, 100);
-	//Small shields more common so 60% chance
-	//Medium shields has 30% chance
-	//Large shields have 10% chance
+	//Small shields more common so 60% chance green material
+	//Medium shields has 30% chance blue material
+	//Large shields have 10% chance gold material
 	if (RandValue <= 60)
 	{
 		ShieldType = ShieldType::SMALL;
