@@ -46,7 +46,7 @@ void AEnemyCharacter::AgentEngage()
 {
 	if (Path.Num() == 0 && Manager != nullptr)
 	{
-		if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(200.0f))
+		if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(150.0f))
 		{
 			Path = Manager->GeneratePath(CurrentNode, Manager->FindNearestNode(DetectedActor->GetActorLocation()));
 		}
@@ -62,7 +62,7 @@ void AEnemyCharacter::AgentEvade()
 {
 	if (Path.Num() == 0 && Manager != nullptr)
 	{
-		if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(200.0f))
+		if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(150.0f))
 		{
 			Path = Manager->GeneratePath(CurrentNode, Manager->FindFurthestNode(DetectedActor->GetActorLocation()));
 		}
@@ -82,7 +82,7 @@ void AEnemyCharacter::AgentInvestigate()
 	{
 		if (Path.Num() == 0 && Manager != nullptr)
 		{
-			if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(200.0f))
+			if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(150.0f))
 			{
 				Path = Manager->GeneratePath(CurrentNode, Manager->FindNearestNode(DetectedActor->GetActorLocation())); // generate a path to the location of the sound
 				//GetWorldTimerManager().SetTimer(DelayHandle, this, &AEnemyCharacter::AgentPatrol, 5.0f, false); // add a delay when the AI investigates the location of the sound, before returning to PATROL (not working)
@@ -186,7 +186,7 @@ void AEnemyCharacter::MoveAlongPath()
 	if (Path.Num() > 0 && Manager != nullptr)
 	{
 		//UE_LOG(LogTemp, Display, TEXT("Current Node: %s"), *CurrentNode->GetName())
-		if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(200.0f))
+		if ((GetActorLocation() - CurrentNode->GetActorLocation()).IsNearlyZero(1500.0f))
 		{
 			UE_LOG(LogTemp, Display, TEXT("At Node %s"), *CurrentNode->GetName())
 				CurrentNode = Path.Pop();
