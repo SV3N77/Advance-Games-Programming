@@ -12,14 +12,14 @@ void APowerup::OnGenerate()
 	// Jump Boost = 50% chance
 	// Speed Boost = 50% chance
 	// Powerup includes a 50/50 chance between a 'Jump Boost Powerup' and a 'Speed Boost Powerup'.
-	if (RandomValue <= 50) // If 'RandomValue' is between 0 and 50 then...
+	if (RandomValue <= 50)
 	{
 		Powerup = PowerupType::JUMPBOOST;
-		JumpBoostHeight = 700.0f; // Increase jump height from 420.0f (default) to 700.0f
+		JumpBoostHeight = 700.0f; // Increase jump height
 	}
-	else if (RandomValue > 50 && RandomValue <= 100) // If 'RandomValue' is between 50 and 100 then...
+	else if (RandomValue > 50 && RandomValue <= 100)
 	{
 		Powerup = PowerupType::SPEEDBOOST;
-		SpeedBoostWalkSpeed = 1350.0f; // Increase walk speed from 900.0f (default) to 1350.0f
+		SpeedBoostWalkSpeed = 1400.0f; // Increase walk speed
 	}
 }
