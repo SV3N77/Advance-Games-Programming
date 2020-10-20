@@ -60,3 +60,8 @@ float UHealthComponent::HealthPercentageRemaining()
 {
 	return CurrentHealth / MaxHealth;
 }
+
+void UHealthComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+}
