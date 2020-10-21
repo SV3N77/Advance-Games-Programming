@@ -19,6 +19,9 @@ APlayerCharacter::APlayerCharacter()
 
 	LookSensitivity = 1.0f;
 	SprintMultiplier = 1.5f;
+
+	NormalMovementSpeed = GetCharacterMovement()->MaxWalkSpeed;
+	SprintMovementSpeed = GetCharacterMovement()->MaxWalkSpeed * SprintMultiplier;
 	
 }
 
@@ -92,14 +95,27 @@ void APlayerCharacter::Turn(float Value)
 
 void APlayerCharacter::SprintStart()
 {
-	GetCharacterMovement()->MaxWalkSpeed *= SprintMultiplier;
+	GetCharacterMovement()->MaxWalkSpeed = SprintMovementSpeed;
+	ServerSprintStart();
 }
 
 void APlayerCharacter::SprintEnd()
 {
-	GetCharacterMovement()->MaxWalkSpeed /= SprintMultiplier;
+	GetCharacterMovement()->MaxWalkSpeed = NormalMovementSpeed;
+	ServerSprintEnd();
 	
 }
+
+void APlayerCharacter::ServerSprintStart_Implementation()
+{
+	GetCharacterMovement()->MaxWalkSpeed = SprintMovementSpeed;
+}
+
+void APlayerCharacter::ServerSprintEnd_Implementation()
+{
+	GetCharacterMovement()->MaxWalkSpeed = NormalMovementSpeed;
+}
+
 
 void APlayerCharacter::Distract()
 {
