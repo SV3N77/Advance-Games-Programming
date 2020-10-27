@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Net/UnrealNetwork.h"
 #include "HealthComponent.generated.h"
 
 
@@ -29,12 +30,12 @@ public:
 	float MaxHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shield")
-	int32 CurrentShield;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shield")
 	int32 MaxShield;
-
-	UPROPERTY(BlueprintReadOnly)
+	
+	UPROPERTY(Replicated, BlueprintReadOnly)
+	int32 CurrentShield;
+	
+	UPROPERTY(Replicated, BlueprintReadOnly)
 	float CurrentHealth;
 
 	UFUNCTION(BlueprintCallable)
@@ -44,4 +45,5 @@ public:
 	void OnDeath();
 
 	float HealthPercentageRemaining();
+
 };

@@ -3,6 +3,8 @@
 
 #include "HealthComponent.h"
 
+
+
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
 {
@@ -61,7 +63,10 @@ float UHealthComponent::HealthPercentageRemaining()
 	return CurrentHealth / MaxHealth;
 }
 
+
 void UHealthComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(UHealthComponent, CurrentHealth);
+	DOREPLIFETIME(UHealthComponent, CurrentShield);
 }
