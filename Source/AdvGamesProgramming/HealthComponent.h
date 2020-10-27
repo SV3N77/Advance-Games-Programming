@@ -32,7 +32,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shield")
 	int32 MaxShield;
 	
-	UPROPERTY(Replicated, BlueprintReadOnly)
+	UPROPERTY(Replicated, BlueprintReadWrite)
 	int32 CurrentShield;
 	
 	UPROPERTY(Replicated, BlueprintReadOnly)
