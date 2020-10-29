@@ -20,15 +20,18 @@ class ADVGAMESPROGRAMMING_API AShieldPickup : public APickup
 	GENERATED_BODY()
 
 public:
+	
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnPickup(AActor* ActorThatPickedUp) override;
 	UFUNCTION(BlueprintCallable)
 	void OnGenerate() override;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	//Shield variables
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly)
 	ShieldType ShieldType;
 	
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly)
 	int32 CurrentShield;
 
 };

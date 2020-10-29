@@ -3,6 +3,8 @@
 
 #include "ShieldPickup.h"
 
+#include "Net/UnrealNetwork.h"
+
 void AShieldPickup::OnGenerate()
 {
 	APickup::OnGenerate();
@@ -29,3 +31,9 @@ void AShieldPickup::OnGenerate()
 	
 }
 
+void AShieldPickup::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(AShieldPickup, ShieldType);
+	DOREPLIFETIME(AShieldPickup, CurrentShield);
+}
