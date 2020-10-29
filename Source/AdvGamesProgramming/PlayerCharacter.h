@@ -25,6 +25,7 @@ protected:
 
 	float NormalMovementSpeed;
 	float SprintMovementSpeed;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -46,6 +47,7 @@ public:
 	void ServerSprintStart();
 	UFUNCTION(Server, Reliable)
 	void ServerSprintEnd();
+
 private:
 	UPROPERTY(EditInstanceOnly, meta = (ClampMin = "0.0", ClampMax = "2.0", UIMin = "0.0", UIMax = "2.0"))
 	float LookSensitivity;
