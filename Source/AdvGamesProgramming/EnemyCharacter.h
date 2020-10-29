@@ -7,8 +7,6 @@
 #include "GameFramework/Character.h"
 #include "AIManager.h"
 #include "HealthComponent.h"
-#include "Perception/AISense_Hearing.h"
-#include "Perception/AISense_Sight.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "EnemyCharacter.generated.h"
 
