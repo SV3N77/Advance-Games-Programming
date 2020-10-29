@@ -23,17 +23,20 @@ class ADVGAMESPROGRAMMING_API APowerup : public APickup
 	
 public:
 
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnPickup(AActor* ActorThatPickedUp) override;
 	UFUNCTION(BlueprintCallable)
 	void OnGenerate() override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly)
 	PowerupType Powerup;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly)
 	float JumpBoostHeight;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly)
 	float SpeedBoostWalkSpeed;
+
 };

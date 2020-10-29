@@ -2,6 +2,8 @@
 
 
 #include "Powerup.h"
+#include "Net/UnrealNetwork.h"
+#include "PlayerCharacter.h"
 
 void APowerup::OnGenerate()
 {
@@ -22,4 +24,12 @@ void APowerup::OnGenerate()
 		Powerup = PowerupType::SPEEDBOOST;
 		SpeedBoostWalkSpeed = 1350.0f; // Increase max walk speed from 900.0f (default)
 	}
+}
+
+void APowerup::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(APowerup, Powerup);
+	DOREPLIFETIME(APowerup, JumpBoostHeight);
+	DOREPLIFETIME(APowerup, SpeedBoostWalkSpeed);
 }
