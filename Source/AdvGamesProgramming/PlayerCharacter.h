@@ -22,9 +22,8 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
 	float NormalMovementSpeed;
-	float SprintMovementSpeed;
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -41,6 +40,8 @@ public:
 	void SprintEnd();
 	void Distract();
 
+	UPROPERTY(BlueprintReadWrite)
+		float SprintMovementSpeed;
 	//Server Functions for sprint
 	UFUNCTION(Server, Reliable)
 	void ServerSprintStart();
