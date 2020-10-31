@@ -14,4 +14,18 @@ class ADVGAMESPROGRAMMING_API AMultiplayerGameMode : public AGameMode
 {
 	GENERATED_BODY()
 	
+public:
+	// -------------------- RESPAWN FUNCTIONS --------------------
+	/**
+	 * The main respawn function that will destroy the pawn and set the timer for the trigger respawn function.
+	 * @param: Controller: The controller responsible for the pawn that died.
+	 */
+	void Respawn(AController* Controller);
+
+	/**
+	 * Will cause the default pawn to be respawned instantly. Call this from a timer in Respawn.
+	 * @param Controller: The controller responsible for the pawn that died.
+	 */
+	UFUNCTION()
+		void TriggerRespawn(AController* Controller);
 };

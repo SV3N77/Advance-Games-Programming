@@ -40,8 +40,9 @@ public:
 	void SprintEnd();
 	void Distract();
 
+	void OnDeath();
 	UPROPERTY(BlueprintReadWrite)
-		float SprintMovementSpeed;
+	float SprintMovementSpeed;
 	//Server Functions for sprint
 	UFUNCTION(Server, Reliable)
 	void ServerSprintStart();

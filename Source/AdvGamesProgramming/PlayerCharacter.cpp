@@ -2,6 +2,8 @@
 
 
 #include "PlayerCharacter.h"
+
+#include "MultiplayerGameMode.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/World.h"
@@ -115,6 +117,18 @@ void APlayerCharacter::ServerSprintEnd_Implementation()
 	GetCharacterMovement()->MaxWalkSpeed = NormalMovementSpeed;
 }
 
+void APlayerCharacter::OnDeath()
+{
+	if (GetLocalRole() == ROLE_Authority)
+	{
+		AMultiplayerGameMode* GameMode = Cast<AMultiplayerGameMode>(GetWorld()->GetAuthGameMode());
+		if (GameMode)
+		{
+			GameMode->Respawn(GetController());
+		}
+	}
+
+}
 
 void APlayerCharacter::Distract()
 {
