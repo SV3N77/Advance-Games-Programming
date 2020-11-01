@@ -48,6 +48,8 @@ public:
 	void ServerSprintStart();
 	UFUNCTION(Server, Reliable)
 	void ServerSprintEnd();
+	UFUNCTION(Server, Reliable, NetMulticast)
+	void ServerDistract();
 
 private:
 	UPROPERTY(EditInstanceOnly, meta = (ClampMin = "0.0", ClampMax = "2.0", UIMin = "0.0", UIMax = "2.0"))

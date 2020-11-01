@@ -136,5 +136,12 @@ void APlayerCharacter::Distract()
 	UGameplayStatics::PlaySoundAtLocation(this, DistractCue, this->GetActorLocation(), FRotator::ZeroRotator, 1, 1, 0, nullptr, nullptr, this);
 	//Reports this sound as a tag as 'noise'
 	UAISense_Hearing::ReportNoiseEvent(this, this->GetActorLocation(), 1, this, 0, TEXT("Noise"));
+	ServerDistract();
 }
-
+//Not sure how to implement this on the server
+void APlayerCharacter::ServerDistract_Implementation()
+{
+	UGameplayStatics::PlaySoundAtLocation(this, DistractCue, this->GetActorLocation(), FRotator::ZeroRotator, 1, 1, 0, nullptr, nullptr, this);
+	//Reports this sound as a tag as 'noise'
+	UAISense_Hearing::ReportNoiseEvent(this, this->GetActorLocation(), 1, this, 0, TEXT("Noise"));
+}
