@@ -119,6 +119,7 @@ void APlayerCharacter::ServerSprintEnd_Implementation()
 
 void APlayerCharacter::OnDeath()
 {
+	//Checks if its on server 
 	if (GetLocalRole() == ROLE_Authority)
 	{
 		AMultiplayerGameMode* GameMode = Cast<AMultiplayerGameMode>(GetWorld()->GetAuthGameMode());
@@ -129,7 +130,7 @@ void APlayerCharacter::OnDeath()
 	}
 
 }
-
+//Doesnt work anymore :(
 void APlayerCharacter::Distract()
 {
 	//plays the Whistle sound 
