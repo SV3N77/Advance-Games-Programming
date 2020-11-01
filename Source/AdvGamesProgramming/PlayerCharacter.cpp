@@ -23,7 +23,10 @@ APlayerCharacter::APlayerCharacter()
 
 	NormalMovementSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	SprintMovementSpeed = GetCharacterMovement()->MaxWalkSpeed * SprintMultiplier;
-	
+
+	ConstructorHelpers::FObjectFinder<USoundCue> DistractSoundCue(TEXT("/Game/Assets/Audio/Whistle_Distract_Cue"));
+	DistractCue = DistractSoundCue.Object;
+		
 }
 
 // Called when the game starts or when spawned
@@ -55,7 +58,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &APlayerCharacter::Jump);
 	PlayerInputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Pressed, this, &APlayerCharacter::SprintStart);
 	PlayerInputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Released, this, &APlayerCharacter::SprintEnd);
-	PlayerInputComponent->BindAction(TEXT("Distract"), EInputEvent::IE_Pressed, this, &APlayerCharacter::Distract);
+	// PlayerInputComponent->BindAction(TEXT("Distract"), EInputEvent::IE_Pressed, this, &APlayerCharacter::Distract);
 }
 
 void APlayerCharacter::MoveForward(float Value)
@@ -130,19 +133,16 @@ void APlayerCharacter::OnDeath()
 	}
 
 }
-//Doesnt work anymore :(
+
 void APlayerCharacter::Distract()
 {
-	//plays the Whistle sound 
-	UGameplayStatics::PlaySoundAtLocation(this, DistractCue, this->GetActorLocation(), FRotator::ZeroRotator, 1, 1, 0, nullptr, nullptr, this);
-	//Reports this sound as a tag as 'noise'
-	UAISense_Hearing::ReportNoiseEvent(this, this->GetActorLocation(), 1, this, 0, TEXT("Noise"));
-	ServerDistract();
+	if(DistractCue)
+	{
+		//plays the Whistle sound 
+		UGameplayStatics::PlaySoundAtLocation(this, DistractCue, this->GetActorLocation(), FRotator::ZeroRotator, 1, 1, 0, nullptr, nullptr, this);
+		//Reports this sound as a tag as 'noise'
+		UAISense_Hearing::ReportNoiseEvent(this, this->GetActorLocation(), 1, this, 0, TEXT("Noise"));
+	}
+	else UE_LOG(LogTemp, Warning, TEXT("DistractCue not found"))
 }
-//Not sure how to implement this on the server
-void APlayerCharacter::ServerDistract_Implementation()
-{
-	UGameplayStatics::PlaySoundAtLocation(this, DistractCue, this->GetActorLocation(), FRotator::ZeroRotator, 1, 1, 0, nullptr, nullptr, this);
-	//Reports this sound as a tag as 'noise'
-	UAISense_Hearing::ReportNoiseEvent(this, this->GetActorLocation(), 1, this, 0, TEXT("Noise"));
-}
+

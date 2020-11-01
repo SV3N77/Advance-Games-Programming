@@ -38,9 +38,11 @@ public:
 
 	void SprintStart();
 	void SprintEnd();
+	UFUNCTION(BlueprintCallable)
 	void Distract();
-
 	void OnDeath();
+	//Sound cue able to be made through adding it in the constructor  
+	USoundCue* DistractCue;
 	UPROPERTY(BlueprintReadWrite)
 	float SprintMovementSpeed;
 	//Server Functions for sprint
@@ -48,8 +50,6 @@ public:
 	void ServerSprintStart();
 	UFUNCTION(Server, Reliable)
 	void ServerSprintEnd();
-	UFUNCTION(Server, Reliable, NetMulticast)
-	void ServerDistract();
 
 private:
 	UPROPERTY(EditInstanceOnly, meta = (ClampMin = "0.0", ClampMax = "2.0", UIMin = "0.0", UIMax = "2.0"))
@@ -58,9 +58,7 @@ private:
 	UPROPERTY(EditInstanceOnly)
 	float SprintMultiplier;
 
-	//Sound cue able to be made through adding it in details section
-	UPROPERTY(EditInstanceOnly)
-	USoundCue* DistractCue;
+	
 	
 	UCameraComponent* Camera;
 };
